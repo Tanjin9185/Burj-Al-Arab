@@ -31,8 +31,8 @@ const Form = () => {
         //  const newUserInfo = {...user};
         setUser(data);
 
-        if (newUser && user.email && user.password) {
-            firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
+        if (newUser && data.email && data.password) {
+            firebase.auth().createUserWithEmailAndPassword(data.email, data.password)
                 .then((userCredential) => {
                     // Signed in 
                     var user = userCredential.user;
@@ -58,9 +58,9 @@ const Form = () => {
                 });
         }
 
-        if (!newUser && user.email && user.password) {
+        if (!newUser && data.email && data.password) {
 
-            firebase.auth().signInWithEmailAndPassword(user.email, user.password)
+            firebase.auth().signInWithEmailAndPassword(data.email, data.password)
                 .then((userCredential) => {
                     // Signed in
                     var user = userCredential.user;
@@ -99,10 +99,15 @@ const Form = () => {
                 <input name="email" ref={register({ required: true, pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ })} placeholder="exampl.1@gmail.com" /><br />
                 {errors.email && <span className="error">Email field is required</span>}<br />
 
-                <input type="password" name="password" ref={register({ required: true, pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/ })} placeholder="Password" /><br />
+                <input type="password" name="password" ref={register({ required: true, pattern: /\d{1}/ })} placeholder="Password" /><br />
                 {errors.password && <span style={{ color: 'red' }}>Uppercase,Lowercase,Number,Special-character is required</span>}<br />
 
-                <input type="submit" value={newUser ? 'Sign-up' : 'Sign-in'} />
+                {/* <input type="submit" value={newUser ? 'Sign-up' : 'Sign-in'} /> */}
+                {/* <button  type="submit" >{newUser ? 'Sign-up' : 'Sign-in'}</button> */}
+                {
+                    newUser ? <button type="submit">sign-up</button>
+                    : <button type ="submit">Sign-in</button>
+                }
             </form>
 
             <p>{user.name}</p>
