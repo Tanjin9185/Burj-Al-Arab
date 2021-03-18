@@ -4,8 +4,18 @@ import { useForm } from 'react-hook-form';
 import './Form.css'
 import firebase from "firebase/app";
 import "firebase/auth";
+import { useContext } from 'react';
+import { UserContext } from '../App';
+import { useHistory, useLocation } from 'react-router';
+
+
 
 const Form = () => {
+    let history = useHistory();
+    let location = useLocation();
+
+    let { from } = location.state || { from: { pathname: "/" } };
+    const [loggedInUser, setLoggedInUser] = useContext(UserContext);
     const { register, handleSubmit, watch, errors } = useForm();
     const [newUser, setNewUser] = useState(false);
 
@@ -30,7 +40,9 @@ const Form = () => {
                     const newUser = { ...user };
                     newUser.message = true;
                     newUser.error = '';
-                    setUser(newUser)
+                    setUser(newUser);
+                    history.replace(from);
+                    setLoggedInUser(newUser);
                     // ...
                 })
                 .catch((error) => {
@@ -67,6 +79,7 @@ const Form = () => {
                     newUser.message = false;
                     newUser.error = errorMessage;
                     setUser(newUser)
+
                 });
         }
     };

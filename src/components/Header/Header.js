@@ -3,8 +3,12 @@ import { Link } from 'react-router-dom';
 import './Header.css';
 import header from '../../images/header.png';
 import logo from '../../images/icons/logo.png';
+import { UserContext } from '../../App';
+import { useContext } from 'react';
 
 const Header = () => {
+    
+    const [loggedInUser, setLoggedInUser] = useContext(UserContext);
     return (
         <div style={{ backgroundImage: `linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(${header})` }} className="header">
             <nav className="nav">
@@ -21,6 +25,7 @@ const Header = () => {
                     <li>
                         <Link className="btn-book" to="/book">Book</Link>
                     </li>
+                    <button onClick={() => setLoggedInUser({})}>SignOut</button>
                 </ul>
             </nav>
             <div className="title-container">
