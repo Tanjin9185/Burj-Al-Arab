@@ -14,7 +14,8 @@ import PriavteRoute from './components/PriavteRoute/PriavteRoute';
 export const UserContext = createContext();
 
 function App() {
-  const [loggedInUser, setLoggedInUser] = useState({});
+  const user = {displayName: 'Tuhin', email: 'tuhin@gmail.com'};
+  const [loggedInUser, setLoggedInUser] = useState(user);
   return (
     <UserContext.Provider value={[loggedInUser, setLoggedInUser]}>
       <p>Name : {loggedInUser.displayName}</p>
